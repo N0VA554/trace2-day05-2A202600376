@@ -147,6 +147,38 @@ Học viên nộp:
 3. `reports/benchmark_report.md` so sánh single vs multi-agent.
 4. Một đoạn giải thích failure mode và cách fix.
 
+### Hướng dẫn tạo deliverables nhanh
+
+#### 1) Benchmark report (`reports/benchmark_report.md`)
+
+Chạy benchmark và auto-generate report:
+
+```bash
+python -m multi_agent_research_lab.cli benchmark \
+  --query "What is a multi-agent system?"
+```
+
+Hoặc chạy nhiều query từ file YAML và xuất report theo đường dẫn bạn muốn:
+
+```bash
+python -m multi_agent_research_lab.cli benchmark \
+  --queries-file configs/lab_default.yaml \
+  --out reports/benchmark_report.md
+```
+
+#### 2) Trace (screenshot/link)
+
+- Nếu dùng **LangSmith**: set `LANGSMITH_API_KEY` (và optional `LANGSMITH_PROJECT`) trong `.env`, sau đó chạy `baseline`/`multi-agent`/`benchmark` và lấy link trace trên LangSmith UI.
+- Nếu không dùng provider: bạn vẫn có thể chụp màn hình output CLI + route history, và (tuỳ bạn mở rộng) log `state.trace` ra file.
+
+#### 3) Failure mode & fix (đoạn giải thích)
+
+Tối thiểu nên có 3 ý:
+
+- **Failure mode**: lỗi gì, xảy ra ở agent nào/bước nào (dựa vào route history/trace).
+- **Root cause**: nguyên nhân (prompt/state/timeout/routing/search/LLM error...).
+- **Fix**: bạn sửa gì (guardrail, validation, retry/fallback, thay routing policy, thêm citation check...). 
+
 ## References
 
 - Anthropic: Building effective agents — https://www.anthropic.com/engineering/building-effective-agents
